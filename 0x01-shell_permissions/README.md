@@ -8,3 +8,7 @@ chmod o+r  adds execute permission to the owner and the group owner, and read pe
 
 chown new_owner file_name
 use to change the owner of the file 
+
+
+chmod +x hello
+Write a script that adds execution permission to the owner, the group owner and the other users, to the file hello
