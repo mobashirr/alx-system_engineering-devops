@@ -1,2 +1,2 @@
 #!/bash/bin
-echo "" < /etc/passwd
+cat "" < /etc/passwd
