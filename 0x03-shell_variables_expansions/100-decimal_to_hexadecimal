@@ -1,2 +1,2 @@
 #!/bin/bash
-printf %x $((16#$DECIMAL))
+echo “obase=16; $DESIMAL” | bc
