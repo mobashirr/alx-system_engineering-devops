@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e "$((16#$DESIMAL )) \n" 
+echo -e "$((10#$DESIMAL )) \n" 
