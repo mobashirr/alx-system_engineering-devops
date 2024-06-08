@@ -3,18 +3,18 @@
 for arg in "$@"; do
 
     # Check if the file exists
-    if [ -e "$@" ]; then
+    if [ -e "$arg" ]; then
         echo "school file exists"
 
     # Check if the file is empty
-        if [ -s "$@" ]; then
+        if [ -s "$arg" ]; then
             echo "school file is not empty"
         else
             echo "school file is empty"
         fi
 
     # Check if the file is a regular file
-        if [ -f "$@" ]; then
+        if [ -f "$arg" ]; then
             echo "school is a regular file"
         fi
     else
