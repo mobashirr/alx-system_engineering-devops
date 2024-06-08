@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# print best school 10 times
+# print best school 10 times using for loop
 
 for i in {0..9};
 do
