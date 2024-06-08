@@ -1,1 +1,23 @@
 #!/usr/bin/env bash
+
+for arg in "$@"; do
+
+    # Check if the file exists
+    if [ -e "$@" ]; then
+        echo "school file exists"
+
+    # Check if the file is empty
+        if [ -s "$@" ]; then
+            echo "school file is not empty"
+        else
+            echo "school file is empty"
+        fi
+
+    # Check if the file is a regular file
+        if [ -f "$@" ]; then
+            echo "school is a regular file"
+        fi
+    else
+        echo "school file does not exist"
+    fi
+done
