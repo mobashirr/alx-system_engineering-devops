@@ -1,1 +1,14 @@
 #!/usr/bin/env bash
+# Loop through each file in the current directory and print the name
+
+# Loop through each file in the current directory
+for file in *; do
+    # Check if the file is not hidden and is a regular file (not a directory)
+    if [[ ! $file == .* && -f $file ]]; then
+        # Get the part of the name after the first dash
+        name=$(echo "$file" | cut -d'-' -f2-)
+        # Display the formatted output
+        echo "$name"
+    fi
+done
+
