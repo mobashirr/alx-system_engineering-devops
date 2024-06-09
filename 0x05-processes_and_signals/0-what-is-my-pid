@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# print the pid of this script
+
+# the & at the end make the process in the background not foreground.
+sleep 100 &
+
+process_pid=$!
+echo "$process_pid"
