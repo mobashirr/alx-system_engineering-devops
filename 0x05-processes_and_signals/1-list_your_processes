@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 # print list of current processs
 
-ps -eo user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,command --sort=user
-
-# Display the process hierarchy
-pstree -p
+ps -aux
