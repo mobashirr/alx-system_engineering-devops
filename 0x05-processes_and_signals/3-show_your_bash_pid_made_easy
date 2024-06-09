@@ -1,1 +1,7 @@
 #!/usr/bin/env bash
+
+
+for process in $(ps -aux | pgrep bash)
+do
+    echo "$process bash"
+done
