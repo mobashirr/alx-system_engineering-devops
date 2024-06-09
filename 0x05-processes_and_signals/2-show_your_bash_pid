@@ -1,1 +1,4 @@
 #!/usr/bin/env bash
+# A shell  script that shows all processes available
+# Only with bash word
+ps -aux | grep bash
