@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# print all processs that contain bash init
 
 for process in $(ps -aux | pgrep bash)
 do
