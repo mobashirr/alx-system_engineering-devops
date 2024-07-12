@@ -1,1 +1,36 @@
 #!/usr/bin/env bash
+
+#!/bin/bash
+
+# SSH client configuration file
+SSH_CONFIG_FILE=/etc/ssh/ssh_config
+
+# Ensure SSH config directory exists
+mkdir -p ~/.ssh
+
+# Check if SSH config file already exists
+if [ ! -f "$SSH_CONFIG_FILE" ]; then
+    touch "$SSH_CONFIG_FILE"
+fi
+
+# Check if configuration for the host already exists
+if ! grep -q "98.98.98.98" "$SSH_CONFIG_FILE"; then
+    # Append configuration for the specific host to SSH config file
+    cat >> "$SSH_CONFIG_FILE" << EOF
+# Configuration for specific host
+Host 98.98.98.98
+    # Use the private key ./school
+    IdentityFile ./school
+    # Disable password authentication
+    PasswordAuthentication no
+EOF
+
+    # echo "SSH client configuration updated for your_server_ip_or_hostname."
+else
+    # echo "Configuration for your_server_ip_or_hostname already exists in SSH config file."
+fi
+
+# Set correct permissions for SSH config file
+chmod 600 "$SSH_CONFIG_FILE"
+
+# echo "SSH client configuration script completed."
