@@ -1,13 +1,15 @@
 # File: 100-puppet_ssh_config.pp
 
-file_line { 'Turn off passwd auth':
-  path   => '/etc/ssh/ssh_config',
-  line   => 'PasswordAuthentication no',
-  match  => '^#?PasswordAuthentication',
+file { '/etc/ssh/ssh_config':
+  ensure  => present,
+  content => template('ssh_config.erb'),
 }
 
-file_line { 'Declare identity file':
-  path   => '/etc/ssh/ssh_config',
-  line   => 'IdentityFile ~/.ssh/school',
-  match  => '^#?IdentityFile',
-}
+# Template file: ssh_config.erb
+# This template ensures that Puppet correctly manages the ssh_config file
+# by adding or modifying the necessary configurations.
+
+Host *
+  IdentityFile ~/.ssh/school
+  PasswordAuthentication no
+
