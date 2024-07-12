@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#!/bin/bash
-
 # SSH client configuration file
 SSH_CONFIG_FILE=/etc/ssh/ssh_config
 

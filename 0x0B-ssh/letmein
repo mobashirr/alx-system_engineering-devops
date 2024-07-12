@@ -1,0 +1,4 @@
+
+
+# to authorize someone to your server:
+ ssh-rsa the_new_public_key
