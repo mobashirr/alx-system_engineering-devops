@@ -1,1 +1,21 @@
 #!/usr/bin/env bash
+# i want to generete rsa key pair 
+# put it in certain file and set passphrase
+
+
+# -t rsa: Specifies the type of key to create (RSA).
+# -b 4096: Specifies the number of bits in the key (4096 bits).
+# -f ~/.ssh/$PRIVATE_KEY: Specifies the filename of the private key.
+# -N "betty": Provides a passphrase ("betty") to encrypt the private key for added security.
+
+# Define the filename for the private key
+PRIVATE_KEY="school"
+
+# Generate the RSA key pair with 4096 bits and protect it with passphrase "betty"
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/$PRIVATE_KEY -N "betty"
+
+# Display success message
+# echo "RSA key pair generated successfully."
+
+# List the generated key files
+# ls ~/.ssh/$PRIVATE_KEY*
