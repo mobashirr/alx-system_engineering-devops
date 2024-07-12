@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Define the server IP address or hostname
+SERVER="100.26.221.247"
+
+# Connect to the server using the private key and user ubuntu
+ssh -i ~/.ssh/school ubuntu@$SERVER
