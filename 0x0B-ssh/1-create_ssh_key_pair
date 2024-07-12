@@ -12,7 +12,7 @@
 PRIVATE_KEY="school"
 
 # Generate the RSA key pair with 4096 bits and protect it with passphrase "betty"
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/$PRIVATE_KEY -N "betty"
+ssh-keygen -t rsa -b 4096 -f ./$PRIVATE_KEY -N "betty"
 
 # Display success message
 # echo "RSA key pair generated successfully."
