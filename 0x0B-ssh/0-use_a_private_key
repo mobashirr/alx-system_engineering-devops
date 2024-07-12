@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# this script will conect to server using ip and private key in 
+# the file ~/.ssh/school
+
 
 # Define the server IP address or hostname
 SERVER="100.26.221.247"
