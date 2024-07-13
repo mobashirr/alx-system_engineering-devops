@@ -1,1 +1,18 @@
 #!/usr/bin/env bash
+
+# Update package index
+apt-get update
+
+# Install nginx if not already installed
+apt-get install -y nginx
+
+# Configure nginx to listen on port 80 and serve "Hello World!" page
+echo "Hello World!" > /usr/share/nginx/html/index.html
+
+# Ensure nginx is running (though it should start automatically after installation)
+nginx
+
+# Test nginx configuration
+curl -s localhost | grep "Hello World!"
+
+
