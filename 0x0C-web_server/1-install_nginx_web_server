@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
 # script for automatic install nginx
 # then set the nginx to listen on port 80 
-# Update package index
 
+# Update package index
 apt-get update
 
 # Install nginx if not already installed
 apt-get install -y nginx
 
 # Configure nginx to listen on port 80 and serve "Hello World!" page
-echo "Hello World!" > /usr/share/nginx/html/index.html
+echo "Hello World!" > /var/www/html/index.html
 
-# Ensure nginx is running (though it should start automatically after installation)
-nginx
+# Check nginx configuration file for default server block
+grep -q "listen 80 default_server;" /etc/nginx/sites-available/default
+if [ $? -ne 0 ]; then
+    # Add default server block if not present
+    sed -i 's/^}/\n\tlisten 80 default_server;\n\tlocation \/ {\n\t\troot \/var\/www\/html;\n\t\tindex index.html index.htm;\n\t}\n}/' /etc/nginx/sites-available/default
+fi
+
+# Restart nginx to apply changes (without using systemctl)
+kill -s HUP $(pgrep -f nginx)
 
 # Test nginx configuration
 curl -s localhost | grep "Hello World!"
-
