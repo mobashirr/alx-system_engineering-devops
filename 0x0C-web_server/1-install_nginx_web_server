@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-
+# script for automatic install nginx
+# then set the nginx to listen on port 80 
 # Update package index
+
 apt-get update
 
 # Install nginx if not already installed
@@ -14,5 +16,4 @@ nginx
 
 # Test nginx configuration
 curl -s localhost | grep "Hello World!"
-
 
