@@ -1,35 +1,6 @@
 #!/usr/bin/env bash
-# script for automatic install nginx
-# then set the nginx to listen on port 80 
-
-# Update package index
-apt-get update
-
-# Install nginx if not already installed
-apt-get install -y nginx
-
-# Configure nginx to serve "Hello World!" from root URL
-cat <<EOF > /etc/nginx/sites-available/default
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html index.htm;
-
-    server_name _;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-EOF
-
-# Create "Hello World!" page
-echo "Hello World!" > /var/www/html/index.html
-
-# Restart nginx to apply changes
-kill -s HUP $(pgrep -f nginx)
-
-# Test nginx configuration
-curl -s localhost | grep "Hello World!"
+#Install nginx web server
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html'
+service nginx start
