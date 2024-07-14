@@ -8,7 +8,7 @@ sudo echo "Hello World!" > /var/www/html/index.nginx-debian.html
 sudo echo "Ceci n'est pas une page" > /usr/share/nginx/html/custom_404.html
 
 sudo sed -i '/server_name _;/a \
-        rewrite ^\/redirect_me https:\/\/github.com\/mohbashirr permanent;\n\
+        rewrite ^\/redirect_me https:\/\/github.com\/hiba-emording permanent;\n\
         error_page 404 \/custom_404.html;\n\
         location = \/custom_404.html {\n\
             root \/usr\/share\/nginx\/html;\n\
