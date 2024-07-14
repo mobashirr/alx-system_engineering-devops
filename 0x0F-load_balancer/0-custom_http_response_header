@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
-#Double the number of webservers
+# Script that configures Nginx server with a custom header
+
 sudo apt-get -y update
 sudo apt-get -y install nginx
-#sudo wget -q -O /etc/nginx/sites-available/default http://exampleconfig.com/static/raw/nginx/ubuntu20.04/etc/nginx/sites-available/default
-config="/etc/nginx/sites-available/default"
-sudo sh -c "echo 'Hello World!' > /var/www/html/index.nginx-debian.html"
-sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.mobashir.tech;}' $config
-sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' $config
-sudo sed -i 's/=404/@404/g' $config
-sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config
+
+sudo echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo echo "Ceci n'est pas une page" > /usr/share/nginx/html/custom_404.html
+
+sudo sed -i '/server_name _;/a \
+        rewrite ^\/redirect_me https:\/\/github.com\/mohbashirr permanent;\n\
+        error_page 404 \/custom_404.html;\n\
+        location = \/custom_404.html {\n\
+            root \/usr\/share\/nginx\/html;\n\
+            internal;\n\
+        }' /etc/nginx/sites-available/default
+
+sudo sed -i '/include \/etc\/nginx\/sites-enabled\/\*;/a \
+        add_header X-Served-By "$HOSTNAME";' /etc/nginx/nginx.conf
+
 sudo service nginx restart
