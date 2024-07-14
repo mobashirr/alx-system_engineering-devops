@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Extract the username from the current path
+USERNAME=$(whoami)
+
+# Set the hostname based on an existing pattern or a new pattern
+# For example, if your current hostname follows a pattern that includes "web-01" or "web-02",
+# you can use this pattern to set the FULL_HOSTNAME
+
+# Assume the hostname is already set to something like "529880-web-01" or "529880-web-02"
+CURRENT_HOSTNAME=$(hostname)
+if [[ "$CURRENT_HOSTNAME" == *"-web-01" ]]; then
+    FULL_HOSTNAME="${USERNAME}-web-01"
+elif [[ "$CURRENT_HOSTNAME" == *"-web-02" ]]; then
+    FULL_HOSTNAME="${USERNAME}-web-02"
+else
+    echo "Unknown server role. Exiting."
+    exit 1
+fi
+
+# Update package lists and install Nginx
+echo "Updating package lists and installing Nginx..."
+sudo apt update
+sudo apt install nginx -y
+
+# Set the hostname of the server
+echo "Setting hostname to $FULL_HOSTNAME..."
+sudo hostnamectl set-hostname "$FULL_HOSTNAME"
+
+# Configure Nginx to add custom header
+echo "Configuring Nginx to add custom header..."
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOL
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    location / {
+        add_header X-Served-By \$hostname;
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOL
+
+# Test Nginx configuration
+echo "Testing Nginx configuration..."
+sudo nginx -t
+
+# Restart Nginx to apply changes
+echo "Restarting Nginx..."
+sudo systemctl restart nginx
+
+echo "Setup complete. Nginx is configured with the custom header X-Served-By: $FULL_HOSTNAME"
+#!/usr/bin/env bash
+#Double the number of webservers
+sudo apt-get -y update
+sudo apt-get -y install nginx
+#sudo wget -q -O /etc/nginx/sites-available/default http://exampleconfig.com/static/raw/nginx/ubuntu20.04/etc/nginx/sites-available/default
+config="/etc/nginx/sites-available/default"
+sudo sh -c "echo 'Hello World!' > /var/www/html/index.nginx-debian.html"
+sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;}' $config
+sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' $config
+sudo sed -i 's/=404/@404/g' $config
+sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config
+sudo service nginx restart
