@@ -56,7 +56,17 @@ frontend http_front
     bind *:80
     timeout client 60s
     stats uri /haproxy?stats
-    default_backend allservers
+
+    # to config more than one app use this method:
+    # acl app1 path_end -i /app1
+    # acl app2 path_end -i /app2
+    # use_backend app1servers if app1
+    # use_backend app2servers if app2
+    # define your servers:
+    # backend app1servers ...
+    # backend app2servers ....
+
+    default_backend http_back
 
 backend http_back
     timeout connect 10s
