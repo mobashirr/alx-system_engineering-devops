@@ -96,6 +96,9 @@ sudo systemctl start haproxy
 
 # to set the https for haproxy:
 
+# stop any server listing in port 80
+#sudo systemctl stop haproxy
+
 # install letsencrypt lib
 # sudo apt install letsencrypt
 
@@ -109,12 +112,14 @@ sudo systemctl start haproxy
 # the paths will apeaer once you complete the last step
 # sudo cat pricate/path cerifcate/path | sudo tee /where/you/want/to/save/file.pem
 # like:
-# sudo cat /etc/letsencrypt/keys/0000_key-certbot.pem /etc/letsencrypt/csr/0000_csr-certbot.pem | sudo tee /etc/letsencrypt/keys/combined.pem
+# sudo cat vim /etc/letsencrypt/live/mobashir.ddns.net/privkey.pem /etc/letsencrypt/live/mobashir.ddns.net/fullchain.pem | sudo tee /etc/ssl/private/cert.pem
+
 
 # know in the haproxy config file add this to frontendhttpsandsttp
 # bind *:443 ssl crt /where/you/want/to/save/file.pem
-# like : bind *:443 ssl crt /etc/letsencrypt/keys/combined.pem
+# like : bind *:443 ssl crt //etc/ssl/private/cert.pem
+
 
  # check for synatx erorrs:
  # sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-
+ # sudo systemctl start haproxy
