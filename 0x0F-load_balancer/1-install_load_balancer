@@ -74,5 +74,3 @@ done
 # ENABLE THE HAPROXY
 sudo systemctl enable haproxy
 sudo systemctl start haproxy
-
-
