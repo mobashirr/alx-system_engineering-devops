@@ -54,11 +54,15 @@ defaults
 
 frontend http_front
     bind *:80
+    timeout client 60s
     stats uri /haproxy?stats
-    default_backend http_back
+    default_backend allservers
 
 backend http_back
+    timeout connect 10s
+    timeout server 100s
     balance roundrobin
+
 EOF'
 
 # Add the web servers to the backend section
