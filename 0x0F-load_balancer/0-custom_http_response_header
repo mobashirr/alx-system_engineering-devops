@@ -8,8 +8,8 @@ sudo apt-get -y install nginx
 sudo sh -c "echo 'Hello World of web i am mohamed bashir!' > /var/www/html/index.nginx-debian.html"
 
 # add the custom header
-sudo sed -i '/server_name _/a add_header X-Served-By '"$HOSTNAME"';' /etc/nginx/sites-enabled/default
-
+sudo sed -i '/include \/etc\/nginx\/sites-enabled\/\*;/a \
+        add_header X-Served-By "$HOSTNAME";' /etc/nginx/nginx.conf
 
 # restart nginx
 sudo service nginx restart
