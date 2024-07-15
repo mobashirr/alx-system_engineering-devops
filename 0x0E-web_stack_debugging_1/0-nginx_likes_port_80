@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # run another server to resolve the problem
+sudo apt-get -y update
 sudo apt -y install apache2
 sudo service apache2 start
 sudo service apache2 stop
