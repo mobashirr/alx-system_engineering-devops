@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
-# run another server to resolve the problem
-sudo apt-get -y update
-sudo apt -y install apache2
-sudo service apache2 start
-sudo service apache2 stop
+# fix nginx configuration file:
+cat /etc/nginx/sites-avaliable/default > /etc/nginx/sites-enabled/default
+sudo service nginx restart
+rm /run/nginx.pid
+
+
+
+# use another method by run another server to resolve the problem
+#sudo apt-get -y update
+#sudo apt -y install apache2
+#sudo service apache2 start
+#sudo service apache2 stop
 
 # run nginx
-sudo apt -y install nginx
-sudo service nginx start
+#sudo apt -y install nginx
+#sudo service nginx start
