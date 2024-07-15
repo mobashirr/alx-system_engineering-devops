@@ -7,6 +7,17 @@ sudo apt-get -y install nginx
 # rewrite to default value of html page
 sudo sh -c "echo 'Hello World of web i am mohamed bashir!' > /var/www/html/index.nginx-debian.html"
 
+
+# add rewrite role to redirct to my github profile
+sudo sed -i '/server_name _;/a \
+        rewrite ^\/redirect_me https:\/\/github.com\/mobashirr permanent;\n\
+        error_page 404 \/custom_404.html;\n\
+        location = \/custom_404.html {\n\
+            root \/usr\/share\/nginx\/html;\n\
+            internal;\n\
+        }' /etc/nginx/sites-available/default
+
+
 # add the custom header
 sudo sed -i '/include \/etc\/nginx\/sites-enabled\/\*;/a \
         add_header X-Served-By "$HOSTNAME";' /etc/nginx/nginx.conf
