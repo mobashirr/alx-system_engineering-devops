@@ -66,6 +66,10 @@ frontend http_front
     # backend app1servers ...
     # backend app2servers ....
 
+    # to forbid request:
+    # http-request deny if { path -i -m beg /admin }
+
+
     default_backend http_back
 
 backend http_back
@@ -87,3 +91,30 @@ done
 # ENABLE THE HAPROXY
 sudo systemctl enable haproxy
 sudo systemctl start haproxy
+
+
+
+# to set the https for haproxy:
+
+# install letsencrypt lib
+# sudo apt install letsencrypt
+
+# start the process to get public and private keys
+# sudo certbot certonly --standalone
+# answere the qustions and then you will get the keys that indecates that this is trusted devise
+# they will ask you about your email and the domain of your server
+
+
+# know you must save the two keys in one file to let haproxy use them you can use this command:
+# the paths will apeaer once you complete the last step
+# sudo cat pricate/path cerifcate/path | sudo tee /where/you/want/to/save/file.pem
+# like:
+# sudo cat /etc/letsencrypt/keys/0000_key-certbot.pem /etc/letsencrypt/csr/0000_csr-certbot.pem | sudo tee /etc/letsencrypt/keys/combined.pem
+
+# know in the haproxy config file add this to frontendhttpsandsttp
+# bind *:443 ssl crt /where/you/want/to/save/file.pem
+# like : bind *:443 ssl crt /etc/letsencrypt/keys/combined.pem
+
+ # check for synatx erorrs:
+ # sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
