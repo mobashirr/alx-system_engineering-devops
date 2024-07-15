@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
+# run another server to resolve the problem
+sudo apt -y install apache2
 sudo service apache2 start
+sudo service apache2 stop
+
+# run nginx
+sudo apt -y install nginx
+sudo service nginx start
