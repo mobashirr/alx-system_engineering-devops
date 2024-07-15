@@ -9,7 +9,7 @@ sudo apt-get install -y haproxy
 # The primary configuration file for HAProxy is /etc/haproxy/haproxy.cfg
 
 # Define the IP addresses of your web servers
-WEB_SERVERS=("100.26.221.248" "18.209.224.205")
+WEB_SERVERS=("100.26.221.247" "18.209.224.209")
 
 # Backup the original HAProxy configuration file
 sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
