@@ -1,1 +1,42 @@
 #!/usr/bin/env bash
+
+# Allow specific incoming traffic
+sudo ufw allow 22/tcp  # Allow SSH
+sudo ufw allow 80/tcp  # Allow HTTP
+sudo ufw allow 443/tcp # Allow HTTPS
+
+# Set default policies
+sudo ufw default deny incoming  # Deny all other incoming traffic
+sudo ufw default allow outgoing # Allow all outgoing traffic
+
+# Enable IP forwarding in the system
+sudo sysctl -w net.ipv4.ip_forward=1    # temporarily enables
+if ! grep -q "net.ipv4.ip_forward=1" /etc/sysctl.conf; then
+    echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+else
+    sudo sed -i 's/#*net.ipv4.ip_forward=.*/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+fi
+sudo sysctl -p
+
+# Update UFW configuration
+sudo sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
+if ! grep -q "net/ipv4/ip_forward=1" /etc/ufw/sysctl.conf; then
+    echo "net/ipv4/ip_forward=1" | sudo tee -a /etc/ufw/sysctl.conf
+else
+    sudo sed -i 's/#*net\/ipv4\/ip_forward=.*/net\/ipv4\/ip_forward=1/' /etc/ufw/sysctl.conf
+fi
+
+# Add forwarding rule to UFW before.rules
+sudo cp /etc/ufw/before.rules /etc/ufw/before.rules.bak # Backup the original file
+sudo sed -i '/^*filter/i \
+*nat\n\
+:PREROUTING ACCEPT [0:0]\n\
+:POSTROUTING ACCEPT [0:0]\n\
+:OUTPUT ACCEPT [0:0]\n\
+-A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080\n\
+COMMIT\n' /etc/ufw/before.rules
+
+# Reload UFW
+sudo ufw disable
+sudo ufw enable
+
