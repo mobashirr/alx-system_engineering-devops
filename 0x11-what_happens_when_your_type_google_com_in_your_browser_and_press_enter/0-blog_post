@@ -1,0 +1,36 @@
+# What Happens When You Type https://www.google.com in Your Browser and Press Enter?
+
+### Introduction
+As a full-stack software engineer, understanding the full lifecycle of a web request is crucial. Let's explore the journey of a web request from the moment you press Enter after typing `https://www.google.com`.
+
+### 1. DNS Request
+First, your browser looks up the IP address for `www.google.com` using **DNS**. It checks its cache, then queries a DNS resolver, which finds the IP address.
+
+### 2. TCP/IP
+Next, your browser initiates a **TCP** connection to the server using the IP address. This involves a three-way handshake (SYN, SYN-ACK, ACK) to establish a reliable connection.
+
+### 3. Firewall
+Data packets pass through **firewalls**, which monitor and control network traffic based on security rules, ensuring only legitimate traffic is allowed.
+
+### 4. HTTPS/SSL
+Since the URL starts with `https`, an **SSL/TLS** handshake occurs to encrypt the connection. The server presents an SSL certificate, which the browser verifies, ensuring a secure connection.
+
+### 5. Load Balancer
+The request reaches Google's **load balancer**, which distributes traffic across multiple servers to ensure availability and reliability.
+
+### 6. Web Server
+The load balancer forwards the request to a **web server**. The web server processes the request and serves web pages and resources.
+
+### 7. Application Server
+The web server communicates with an **application server**, which handles the core business logic, including database queries and computations.
+
+### 8. Database
+If needed, the application server queries a **database** to fetch or update data.
+
+### 9. Final Response
+The application server constructs the response and sends it back through the web server to the load balancer, which forwards it to your browser. The browser then decrypts the response (if encrypted), renders the HTML, CSS, and JavaScript, and finally displays the content.
+
+### Conclusion
+Understanding the journey of a web request is fundamental for any software engineer. It spans multiple layers, from DNS resolution to database interactions, highlighting the complexity of modern web architecture. This knowledge helps in diagnosing issues, optimizing performance, and building secure applications.
+
+### #SoftwareEngineering #WebDevelopment #FullStackDevelopment #DNS #TCPIP #SSL #LoadBalancing #WebServer #ApplicationServer #Database #Networking #CyberSecurity
