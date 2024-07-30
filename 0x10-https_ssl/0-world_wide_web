@@ -6,11 +6,11 @@ get_record_info() {
     local domain=$1
     local subdomain=$2
     local full_domain="$subdomain.$domain"
-    local record_info=$(dig "$full_domain" | grep -A1 'ANSWER SECTION:')
+    local record_info=$(dig "$full_domain" | grep -A1 'ANSWER SECTION:')    # -A1: Print 1 line of trailing context after the matching lines.
     
     if [ -n "$record_info" ]; then
-        local record_type=$(echo "$record_info" | awk 'NR==2 {print $4}')
-        local destination=$(echo "$record_info" | awk 'NR==2 {print $5}')
+        local record_type=$(echo "$record_info" | awk 'NR==2 {print $4}')   # NR==2: Only process the second line of input.
+        local destination=$(echo "$record_info" | awk 'NR==2 {print $5}')   # $4 or $5 is the filed where the type and ip 
         echo "The subdomain $subdomain is a $record_type record and points to $destination"
     else
         echo "No record found for $full_domain"
