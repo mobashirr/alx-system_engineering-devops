@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Function to get the DNS record information
+get_record_info() {
+    local domain=$1
+    local subdomain=$2
+    local full_domain="$subdomain.$domain"
+    local record_info=$(dig "$full_domain" | grep -A1 'ANSWER SECTION:')
+    
+    if [ -n "$record_info" ]; then
+        local record_type=$(echo "$record_info" | awk 'NR==2 {print $4}')
+        local destination=$(echo "$record_info" | awk 'NR==2 {print $5}')
+        echo "The subdomain $subdomain is a $record_type record and points to $destination"
+    else
+        echo "No record found for $full_domain"
+    fi
+}
+
+# Main script logic
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
+fi
+
+domain=$1
+subdomain=$2
+
+if [ -z "$subdomain" ]; then
+    subdomains=("www" "lb-01" "web-01" "web-02")
+    for sub in "${subdomains[@]}"; do
+        get_record_info "$domain" "$sub"
+    done
+else
+    get_record_info "$domain" "$subdomain"
+fi
