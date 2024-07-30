@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# this script get info about domain name you pass to it 
 
 # Function to get the DNS record information
 get_record_info() {
