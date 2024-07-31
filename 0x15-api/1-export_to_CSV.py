@@ -2,9 +2,9 @@
 
 ''' this module intract with a web api to fetch a user TODO list data'''
 
+import csv
 import requests
 from sys import argv
-import csv
 
 
 def get_total(user_tasks):
@@ -17,10 +17,10 @@ def get_total(user_tasks):
     return total,   done
 
 
-def get_name(user_data):
+def get_name(user_data, column='name'):
     ''' get the user name'''
     for data in user_data:
-        name = data.get('name')
+        name = data.get(column)
         if name:
             return name
 
@@ -29,15 +29,17 @@ def export_to_csv(user_id, user, todos):
     if not user or not todos:
         return
 
-    username = get_name(user)
+    username = get_name(user, "username")
     file_name = f"{user_id}.csv"
-    
+
     with open(file_name, mode='w', newline='') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for task in todos:
-            writer.writerow([user_id, username, task['completed'], task['title']])
-    
+            writer.writerow([user_id, username,
+                            task['completed'], task['title']])
+
     print(f"Data exported to {file_name}")
+
 
 def main():
 
