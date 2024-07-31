@@ -1,15 +1,18 @@
-#!/usr/bin/env python3
+ #!/usr/bin/python3
 
+'''intract with web api and save data to json file'''
 
 import json
 import requests
 import sys
+
 
 def get_key(data, column):
     '''takes a dict and returns the desired key'''
     return data.get(column, None)
 
 def export_to_json(user_id, user, todos):
+    '''save the content to json file'''
     if not user or not todos:
         return
 
