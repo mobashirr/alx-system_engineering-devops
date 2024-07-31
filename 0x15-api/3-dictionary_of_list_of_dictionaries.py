@@ -34,7 +34,7 @@ def tasks_to_dict(user, todos):
 
 def export_to_json(file_content):
     '''export data to json file'''
-    file_name = "todo_all_employees"
+    file_name = "todo_all_employees.json"
     content = json.dumps(file_content, indent=4)
     with open(file_name, 'w') as file:
         file.write(content)
