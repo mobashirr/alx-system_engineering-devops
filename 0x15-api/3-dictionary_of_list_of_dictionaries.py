@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-#!/usr/bin/python3
 
 '''intract with web api and save data to json file'''
 
@@ -32,6 +31,7 @@ def tasks_to_dict(user, todos):
         )
     return result
 
+
 def export_to_json(file_content):
     '''export data to json file'''
     file_name = "todo_all_employees.json"
@@ -50,7 +50,7 @@ def main():
         content = {}
         for user in users.json():
             id = user.get('id')
-            params= {"userId": id}
+            params = {"userId": id}
             tasks = requests.get(url_tasks, params)
             content.update({
                 str(id): tasks_to_dict(user, tasks.json())
