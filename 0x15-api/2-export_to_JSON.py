@@ -11,24 +11,31 @@ def get_key(data, column):
     '''takes a dict and returns the desired key'''
     return data.get(column, None)
 
+
 def export_to_json(user_id, user, todos):
     '''save the content to json file'''
     if not user or not todos:
         return
 
-    username = get_key(user[0], "username")  # Assuming user is a list with one dictionary
+    # Assuming user is a list with one dictionary
+    username = get_key(user[0], "username")
     file_name = f"{user_id}.json"
     file_content = {str(user_id): []}
 
     for task in todos:
         '''collect all tasks in one array'''
         file_content[str(user_id)].append(
-            {"task": get_key(task, "title"), "completed": get_key(task, "completed"), "username": username}
+            {
+                "task": get_key(task, "title"),
+                "completed": get_key(task, "completed"),
+                "username": username
+            }
         )
 
     content = json.dumps(file_content, indent=4)
     with open(file_name, 'w') as file:
         file.write(content)
+
 
 def main():
     ''' main logic'''
@@ -46,7 +53,9 @@ def main():
             total = len(tasks.json())
             done = len([task for task in tasks.json() if task["completed"]])
             # print(f"Employee {name} is done with tasks({done}/{total}):")
-            export_to_json(user_id=user_id, user=user.json(), todos=tasks.json())
+            export_to_json(user_id=user_id, user=user.json(),
+                           todos=tasks.json())
+
 
 if __name__ == "__main__":
     main()
