@@ -34,12 +34,11 @@ def main():
         id = argv[1]
         url_tasks = 'https://jsonplaceholder.typicode.com/todos'
         url_users = 'https://jsonplaceholder.typicode.com/users'
-        params = {
-            "userId":id
-        }
+        params_tasks = { "userId":id }
+        params_users = { "id": id }
 
-        tasks = requests.get(url_tasks, params=params)
-        users = requests.get(url_users, params=params)
+        tasks = requests.get(url_tasks, params=params_tasks)
+        users = requests.get(url_users, params=params_users)
 
         if tasks.status_code == 200 and users.status_code == 200:
             total,done = get_total(tasks.json())
